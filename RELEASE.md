@@ -2,13 +2,22 @@
 
 所有模型权重文件通过 GitHub Release 托管，不直接提交到 Git 仓库。下载后放入对应目录即可使用。
 
-## YOLO11n v3 256×256
+## 下载方式
 
-### 下载地址
+由于 GitHub Release 不支持 `.pt`/`.pth`/`.onnx`/`.espdl` 等权重文件扩展名，权重已按模型分别打包为 ZIP：
+
+| 压缩包 | 大小 | 内容 |
+|--------|------|------|
+| `yolo11n_v3_weights.zip` | 15.52 MB | YOLO11n v3 全部 3 个权重文件 |
+| `lprnet_v6_distill_v3_weights.zip` | 44.2 MB | LPRNet V6 蒸馏 V3 全部 6 个权重文件 |
+
+下载后解压到对应目录（见下方各模型的"放置目录"列）。
 
 Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/v1.0`
 
-### 文件清单
+## YOLO11n v3 256×256
+
+### 文件清单（含于 yolo11n_v3_weights.zip）
 
 | 文件 | 放置目录 | 大小 | MD5 | 说明 |
 |------|---------|------|-----|------|
@@ -30,7 +39,7 @@ Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/
 
 ## LPRNet V6 蒸馏 V3
 
-### 文件清单
+### 文件清单（含于 lprnet_v6_distill_v3_weights.zip）
 
 | 文件 | 放置目录 | 大小 | MD5 | 说明 |
 |------|---------|------|-----|------|
