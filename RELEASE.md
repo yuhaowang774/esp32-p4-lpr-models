@@ -37,9 +37,9 @@ Release v1.0: `https://github.com/<your-username>/esp32-p4-lpr-models/releases/t
 | `final_lprnet_v6_distilled_v3.pth` | `lprnet_v6_distill_v3/pretrained/` | 2,539,802 字节 (2.4 MB) | `4DF25025E391F4E7D0CB28F6009587C5` | 最终模型权重，可重新导出 ONNX/INT8 |
 | `best_lprnet_v6_distilled_v3.pth` | `lprnet_v6_distill_v3/pretrained/` | 7,590,864 字节 (7.2 MB) | `AACF5EF81C1711A5CAAB20C34A0E0EB6` | 最佳验证集权重（备份） |
 | `lprnet_v6_distilled_v3.onnx` | `lprnet_v6_distill_v3/outputs/` | 2,516,577 字节 (2.4 MB) | `AD88AE94BF75FF46F31874B11CE74352` | ONNX 中间格式 |
-| `lprnet_v6_distilled_v3_int8.espdl` | `lprnet_v6_distill_v3/outputs/` | 665,328 字节 (0.65 MB) | `037E2F207A136DEB408FA2919B481FA9` | ESP32-P4 部署的 INT8 量化模型 |
-| `lprnet_v5_best_model.pth` | `lprnet_v6_distill_v3/pretrained/` | — | — | V5 教师模型权重（蒸馏用） |
-| `best_lprnet_v6_distilled_v2.pth` | `lprnet_v6_distill_v3/pretrained/` | — | — | V6 蒸馏 V2 学生权重（V3 初始化用） |
+| `lprnet_v6_int8.espdl` | `lprnet_v6_distill_v3/outputs/` | 665,968 字节 (0.65 MB) | `98C70FC078384903B083D0935606A660` | ESP32-P4 部署的 INT8 量化模型 |
+| `lprnet_v5_best_model.pth` | `lprnet_v6_distill_v3/pretrained/` | 29,575,033 字节 (28.2 MB) | `95BDE52EFF653ABF3CC6E31C5062F81F` | V5 教师模型权重（蒸馏用） |
+| `best_lprnet_v6_distilled_v2.pth` | `lprnet_v6_distill_v3/pretrained/` | 7,590,864 字节 (7.2 MB) | `A16FDB3025189E643B805FD1A0800D86` | V6 蒸馏 V2 学生权重（V3 初始化用） |
 
 ### 性能指标
 
@@ -74,7 +74,7 @@ opensource/
     │   └── best_lprnet_v6_distilled_v2.pth       ← 从 Release 下载
     └── outputs/
         ├── lprnet_v6_distilled_v3.onnx           ← 从 Release 下载
-        └── lprnet_v6_distilled_v3_int8.espdl     ← 从 Release 下载
+        └── lprnet_v6_int8.espdl                  ← 从 Release 下载
 ```
 
 ## MD5 校验

@@ -36,6 +36,9 @@ pretrained/      # 预训练权重，通过 Release 托管
 *.onnx
 *.espdl
 
+# ===== Release 临时目录 =====
+release_assets/
+
 # ===== 系统 / 杂项 =====
 .DS_Store
 Thumbs.db
