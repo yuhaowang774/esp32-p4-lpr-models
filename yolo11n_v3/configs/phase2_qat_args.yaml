@@ -1,7 +1,7 @@
 task: detect
 mode: train
-model: c:\Users\WYH01\Desktop\model\yolo\runs\train_v3\phase1_best.pt
-data: G:\BaiduNetdiskDownload\CCPD2020\ccpd_combined_augmented\data.yaml
+model: ./outputs/phase1_best.pt
+data: ./data/CCPD2020_augmented/data.yaml
 epochs: 30
 time: null
 patience: 0
@@ -12,7 +12,7 @@ save_period: 5
 cache: false
 device: '0'
 workers: 8
-project: c:\Users\WYH01\Desktop\model\yolo\runs\train_v3
+project: ./outputs
 name: phase2_qat
 exist_ok: true
 pretrained: false
@@ -106,4 +106,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: C:\Users\WYH01\Desktop\model\yolo\runs\train_v3\phase2_qat
+save_dir: ./outputs/phase2_qat
