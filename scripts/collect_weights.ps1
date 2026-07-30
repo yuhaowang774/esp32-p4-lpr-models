@@ -1,21 +1,21 @@
-# 权重文件收集脚本
-# 从项目内和 G 盘收集所有权重文件到 release_assets/ 目录
-# 用法：在 esp32-p4-eye-project 目录下执行 .\opensource\scripts\collect_weights.ps1
+# Weight files collection script
+# Collects all weight files from project and G: drive to release_assets/
+# Usage: run from esp32-p4-eye-project directory: .\opensource\scripts\collect_weights.ps1
 
 $ErrorActionPreference = "Stop"
 
-# 项目根目录（脚本所在目录的上三级）
+# Project root (3 levels up from this script)
 $PROJECT_ROOT = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path))
 $OUTPUT_DIR = Join-Path $PROJECT_ROOT "opensource\release_assets"
 
-# 创建输出目录
+# Create output directory
 if (Test-Path $OUTPUT_DIR) {
     Remove-Item $OUTPUT_DIR -Recurse -Force
 }
 New-Item -ItemType Directory -Force -Path $OUTPUT_DIR | Out-Null
-Write-Host "输出目录: $OUTPUT_DIR" -ForegroundColor Cyan
+Write-Host "Output: $OUTPUT_DIR" -ForegroundColor Cyan
 
-# 权重文件清单：源路径 -> 目标文件名
+# Weight files: source path -> destination filename
 $files = @(
     # YOLO11n v3
     @{
@@ -33,7 +33,7 @@ $files = @(
         dst = "yolo11n_256x256_v3_int8.espdl"
         expected_md5 = "8157CE76714B66E1FCE5C5B2E5B181AB"
     },
-    # LPRNet V6 蒸馏 V3
+    # LPRNet V6 distill V3
     @{
         src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v6_distill_v3_project\final_lprnet_v6_distilled_v3.pth"
         dst = "final_lprnet_v6_distilled_v3.pth"
@@ -54,7 +54,7 @@ $files = @(
         dst = "lprnet_v6_int8.espdl"
         expected_md5 = "98C70FC078384903B083D0935606A660"
     },
-    # LPRNet V5 教师 + V2 学生（蒸馏依赖）
+    # LPRNet V5 teacher + V2 student (distillation dependencies)
     @{
         src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v5_project\lpenet_v5\best_model.pth"
         dst = "lprnet_v5_best_model.pth"
@@ -71,12 +71,14 @@ $success = 0
 $failed = 0
 
 foreach ($f in $files) {
-    $srcPath = Join-Path $PROJECT_ROOT $f.src
-    if (-not (Test-Path $f.src)) {
+    # For absolute paths (e.g. G:\), use directly; for relative paths, prepend PROJECT_ROOT
+    if ([System.IO.Path]::IsPathRooted($f.src)) {
         $srcPath = $f.src
+    } else {
+        $srcPath = Join-Path $PROJECT_ROOT $f.src
     }
     if (-not (Test-Path $srcPath)) {
-        Write-Host "[FAIL] $($f.dst): 源文件不存在 ($($f.src))" -ForegroundColor Red
+        Write-Host "[FAIL] $($f.dst): source not found ($srcPath)" -ForegroundColor Red
         $failed++
         continue
     }
@@ -84,30 +86,30 @@ foreach ($f in $files) {
     $dstPath = Join-Path $OUTPUT_DIR $f.dst
     Copy-Item $srcPath $dstPath -Force
 
-    # MD5 校验
+    # MD5 verification
     $actual_md5 = (Get-FileHash $dstPath -Algorithm MD5).Hash
     if ($actual_md5 -eq $f.expected_md5) {
         $sizeMB = [math]::Round((Get-Item $dstPath).Length / 1MB, 2)
         Write-Host "[OK]   $($f.dst) ($sizeMB MB)" -ForegroundColor Green
         $success++
     } else {
-        Write-Host "[WARN] $($f.dst): MD5 不匹配 (期望: $($f.expected_md5), 实际: $actual_md5)" -ForegroundColor Yellow
+        Write-Host "[WARN] $($f.dst): MD5 mismatch (expected: $($f.expected_md5), actual: $actual_md5)" -ForegroundColor Yellow
         $failed++
     }
 }
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "收集完成: $success 个成功, $failed 个失败" -ForegroundColor $(if ($failed -eq 0) { "Green" } else { "Yellow" })
-Write-Host "输出目录: $OUTPUT_DIR" -ForegroundColor Cyan
+Write-Host "Done: $success succeeded, $failed failed" -ForegroundColor $(if ($failed -eq 0) { "Green" } else { "Yellow" })
+Write-Host "Output: $OUTPUT_DIR" -ForegroundColor Cyan
 
 if ($failed -eq 0) {
     $totalSize = (Get-ChildItem $OUTPUT_DIR | Measure-Object -Property Length -Sum).Sum
     $totalMB = [math]::Round($totalSize / 1MB, 2)
-    Write-Host "总大小: $totalMB MB" -ForegroundColor Cyan
+    Write-Host "Total: $totalMB MB" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "下一步: 将 release_assets/ 目录下的所有文件上传到 GitHub Release" -ForegroundColor White
+    Write-Host "Next: upload all files in release_assets/ to GitHub Release" -ForegroundColor White
 } else {
     Write-Host ""
-    Write-Host "请检查失败项，确认源文件存在且 MD5 正确" -ForegroundColor Red
+    Write-Host "Please check failed items" -ForegroundColor Red
 }
