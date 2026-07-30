@@ -6,7 +6,7 @@
 
 ### 下载地址
 
-Release v1.0: `https://github.com/<your-username>/esp32-p4-lpr-models/releases/tag/v1.0`
+Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/v1.0`
 
 ### 文件清单
 

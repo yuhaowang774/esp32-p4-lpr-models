@@ -13,7 +13,7 @@ keywords:
   - knowledge-distillation
   - INT8-quantization
 license: MIT
-repository-code: "https://github.com/<your-username>/esp32-p4-lpr-models"
+repository-code: "https://github.com/yuhaowang774/esp32-p4-lpr-models"
 version: v1.0.0
 date-released: "2026-07-30"
 preferred-citation:
