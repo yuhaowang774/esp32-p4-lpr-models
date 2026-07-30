@@ -1,0 +1,47 @@
+# YOLO11n v4 Phase 1 超参配置（5060Ti / 640x640 大规模预训练）
+# 此文件为参考，实际超参已写入 train_yolo11n_v4.py 常量区
+
+# 训练参数
+epochs: 150
+imgsz: 640
+batch: 128
+device: '0'
+workers: 16
+
+# 优化器
+optimizer: AdamW
+lr0: 0.0025
+lrf: 0.01
+weight_decay: 0.001
+warmup_epochs: 5
+cos_lr: true
+patience: 30
+
+# 极端场景数据增强
+degrees: 15.0
+shear: 5.0
+perspective: 0.0005
+mosaic: 1.0
+mixup: 0.15
+scale: 0.5
+translate: 0.1
+fliplr: 0.5
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.5
+close_mosaic: 15
+
+# 损失权重
+box: 7.5
+cls: 1.0
+dfl: 1.5
+label_smoothing: 0.05
+
+# 训练配置
+amp: true          # BF16 自动启用
+pretrained: true
+seed: 0
+deterministic: true
+single_cls: false
+val: true
+plots: true

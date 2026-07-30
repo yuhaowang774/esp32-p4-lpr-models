@@ -1,0 +1,46 @@
+# YOLO11n v4 Phase 4 QAT 超参配置（192/256/320 量化感知训练）
+# 此文件为参考，实际超参已写入 train_yolo11n_v4.py 常量区
+
+# 训练参数（以 192 为例，256/320 同理）
+epochs: 30
+imgsz: 192
+batch: 256
+device: '0'
+workers: 16
+
+# 优化器（QAT 用极小 lr）
+optimizer: AdamW
+lr0: 0.0001
+lrf: 0.01
+weight_decay: 0.001
+warmup_epochs: 1
+cos_lr: true
+patience: 0
+
+# QAT 阶段减弱增强防止量化退化
+degrees: 5.0
+shear: 2.0
+perspective: 0.0002
+mosaic: 0.0
+mixup: 0.0
+scale: 0.3
+translate: 0.1
+fliplr: 0.5
+hsv_h: 0.01
+hsv_s: 0.5
+hsv_v: 0.3
+close_mosaic: 5
+
+# 损失权重
+box: 7.5
+cls: 1.0
+dfl: 1.5
+
+# QAT 必须关闭 amp（FP32 训练）
+amp: false
+pretrained: false
+seed: 0
+deterministic: true
+single_cls: false
+val: true
+plots: true

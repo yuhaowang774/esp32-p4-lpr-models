@@ -1,0 +1,12 @@
+# 数据集配置模板（主机端按实际路径修改）
+# 此文件由 build_extreme_dataset.py 自动生成，此处仅作参考
+
+path: D:/yolo_train/datasets/lp_extreme_v1
+train: images/train
+val: images/val
+test: images/test
+
+nc: 2
+names:
+  0: blue_plate
+  1: green_plate

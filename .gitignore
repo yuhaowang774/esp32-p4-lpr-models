@@ -1,0 +1,42 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+.tox/
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+env/
+# conda env
+.conda/
+
+# ===== IDE / 编辑器 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== 项目数据与输出（不入库） =====
+data/            # 数据集目录
+outputs/         # 训练输出
+pretrained/      # 预训练权重，通过 Release 托管
+
+# ===== 权重文件（通过 Release 托管） =====
+*.pt
+*.pth
+*.onnx
+*.espdl
+
+# ===== 系统 / 杂项 =====
+.DS_Store
+Thumbs.db
+*.log
