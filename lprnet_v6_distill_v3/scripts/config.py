@@ -20,7 +20,7 @@ DATA_DIR = os.environ.get("DATA_DIR", "./data/CBLPRD")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "./outputs")
 TEACHER_WEIGHTS = os.environ.get("TEACHER_WEIGHTS", "./pretrained/lprnet_v5_best_model.pth")
 # V3：从 V2 best 权重初始化（在 V2 成功基础上微调）
-STUDENT_WEIGHTS = os.environ.get("STUDENT_WEIGHTS", "./pretrained/lprnet_v6_distill_v2_best.pth")
+STUDENT_WEIGHTS = os.environ.get("STUDENT_WEIGHTS", "./pretrained/best_lprnet_v6_distilled_v2.pth")
 
 # ===== 模型配置 =====
 NUM_CLASSES = 66

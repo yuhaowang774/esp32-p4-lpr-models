@@ -17,7 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # 添加项目根路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 
 from distill_loss_v2 import (
     DistillCTCLossV2,

@@ -58,7 +58,7 @@ LPRNet V6 蒸馏 V3 是面向 ESP32-P4-EYE 端侧部署的中国车牌字符识�
 | `DATA_DIR` | `./data/CBLPRD` | CBLPRD 数据集目录（含 train/val/test.txt） |
 | `OUTPUT_DIR` | `./outputs` | 训练/导出/量化输出目录 |
 | `TEACHER_WEIGHTS` | `./pretrained/lprnet_v5_best_model.pth` | V5 教师模型权重 |
-| `STUDENT_WEIGHTS` | `./pretrained/lprnet_v6_distill_v2_best.pth` | V6 蒸馏 V2 学生权重（V3 初始化用） |
+| `STUDENT_WEIGHTS` | `./pretrained/best_lprnet_v6_distilled_v2.pth` | V6 蒸馏 V2 学生权重（V3 初始化用） |
 
 V5/V6 教师与学生单独训练时另使用 `V5_OUTPUT_DIR`、`V6_OUTPUT_DIR` 控制各自输出目录；`simcrop_test_v3.py` 使用 `SIMCROP_DIR` 指定合成测试集目录。
 
@@ -68,7 +68,7 @@ V5/V6 教师与学生单独训练时另使用 `V5_OUTPUT_DIR`、`V6_OUTPUT_DIR` 
 export DATA_DIR=/data/CBLPRD
 export OUTPUT_DIR=/data/outputs
 export TEACHER_WEIGHTS=/data/pretrained/lprnet_v5_best_model.pth
-export STUDENT_WEIGHTS=/data/pretrained/lprnet_v6_distill_v2_best.pth
+export STUDENT_WEIGHTS=/data/pretrained/best_lprnet_v6_distilled_v2.pth
 python scripts/train_lprnet_v6_distill_v3.py
 ```
 

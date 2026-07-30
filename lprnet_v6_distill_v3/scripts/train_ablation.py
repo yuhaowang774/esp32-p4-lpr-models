@@ -36,7 +36,7 @@ from chars import IDX_TO_CHAR, CHAR_TO_IDX, PROVINCES
 from distill_loss_v2 import DistillCTCLossV2
 from dataset_v2 import LPRDatasetV2, compute_province_weights, collate_fn
 from augmentation_v2 import LPRAugmentationV6DistillV2
-from train_lprnet_v6_distill_v2 import (
+from train_lprnet_v6_distill_v3 import (
     load_teacher_model, load_student_model, get_phase,
     decode_predictions, validate, validate_balanced,
 )
@@ -47,12 +47,12 @@ def get_alpha_ablation(epoch, fixed_alpha=None):
     """消融实验的 alpha 调度：fixed_alpha 不为 None 时固定 alpha"""
     if fixed_alpha is not None:
         return fixed_alpha
-    return train_lprnet_v6_distill_v2_get_alpha(epoch)
+    return train_lprnet_v6_distill_v3_get_alpha(epoch)
 
 
-def train_lprnet_v6_distill_v2_get_alpha(epoch):
+def train_lprnet_v6_distill_v3_get_alpha(epoch):
     """导入原 get_alpha 函数"""
-    from train_lprnet_v6_distill_v2 import get_alpha
+    from train_lprnet_v6_distill_v3 import get_alpha
     return get_alpha(epoch)
 
 
@@ -60,7 +60,7 @@ def train_one_epoch_ablation(teacher, student, loss_fn, dataloader, optimizer,
                               scheduler, scaler, use_amp, device, epoch,
                               fixed_alpha=None):
     """消融实验训练一个 epoch"""
-    import train_lprnet_v6_distill_v2 as base
+    import train_lprnet_v6_distill_v3 as base
     teacher.eval()
     student.train()
 
@@ -75,7 +75,7 @@ def train_one_epoch_ablation(teacher, student, loss_fn, dataloader, optimizer,
     if fixed_alpha is not None:
         alpha = fixed_alpha
     else:
-        alpha = train_lprnet_v6_distill_v2_get_alpha(epoch)
+        alpha = train_lprnet_v6_distill_v3_get_alpha(epoch)
     loss_fn.alpha = alpha
 
     total_loss = 0

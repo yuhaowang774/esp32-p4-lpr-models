@@ -15,12 +15,12 @@ import torch.nn as nn
 from torch.optim import AdamW
 
 # 添加项目根路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 
 from model_v5 import LPRNetV5
 from model_v6 import LPRNetV6
 from distill_loss_v2 import DistillCTCLossV2
-from train_lprnet_v6_distill_v2 import load_teacher_model, load_student_model
+from train_lprnet_v6_distill_v3 import load_teacher_model, load_student_model
 
 
 def _make_safe_targets(num_samples=1, plate_len=7):

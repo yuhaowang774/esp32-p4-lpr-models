@@ -9,6 +9,9 @@ OUTPUT_DIR = Path(os.environ.get("OUTPUT_DIR", "./outputs"))
 PRETRAINED_WEIGHTS = os.environ.get("PRETRAINED_WEIGHTS", "./pretrained/yolo11n.pt")
 
 sys.path.insert(0, os.environ.get("TRAIN_SCRIPTS_DIR", "./scripts/train"))
+# NOTE: train_yolo11n_lp.py 定义了 DSConv 和 replace_conv_with_dsconv，用于评估
+# 使用深度可分离卷积的轻量化模型。此模块不包含在本仓库中，需要单独提供。
+# 如需运行此脚本，请通过 TRAIN_SCRIPTS_DIR 环境变量指向包含该模块的目录。
 from train_yolo11n_lp import DSConv, replace_conv_with_dsconv
 from ultralytics import YOLO
 import ultralytics.nn.tasks as tasks

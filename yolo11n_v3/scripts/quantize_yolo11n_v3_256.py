@@ -1,3 +1,5 @@
+# NOTE: 此脚本量化 320x320 尺寸的 YOLO11n v3 模型。
+# 256x256 尺寸模型的量化请使用 gen_256_from_320.py（从 320x320 权重重新导出 256x256 ONNX 并量化）。
 import os
 import sys
 import torch
@@ -10,7 +12,7 @@ import cv2
 from esp_ppq import QuantizationSettingFactory
 from esp_ppq.api import espdl_quantize_onnx
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
+sys.path.insert(0, str(Path(__file__).parent))
 from patch_esp_ppq import apply_patch
 
 # 路径配置（通过环境变量覆盖，默认使用相对路径）

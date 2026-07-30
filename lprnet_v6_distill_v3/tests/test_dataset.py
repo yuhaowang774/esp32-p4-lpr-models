@@ -20,7 +20,7 @@ import torch
 from torchvision import transforms
 
 # 添加项目根路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 
 from dataset_v2 import (
     LPRDatasetV2,

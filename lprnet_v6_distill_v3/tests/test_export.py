@@ -15,7 +15,7 @@ import torch
 import numpy as np
 
 # 添加项目根路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 
 from model_v6 import LPRNetV6
 from export_onnx import export_onnx, remove_dropout

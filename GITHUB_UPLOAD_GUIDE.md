@@ -43,16 +43,21 @@ git push -u origin main
 
 ## 第三步：收集权重文件
 
+此步骤仅维护者需要。普通用户应直接从 GitHub Release 下载权重（见第四步）。
+
 ```bash
 # 回到项目根目录
 cd ..
+
+# 设置 LPRNet 训练目录环境变量（替换为你的实际路径）
+$env:LPRNET_TRAIN_DIR = "你的LPRNet训练根目录"
 
 # 执行收集脚本
 .\opensource\scripts\collect_weights.ps1
 ```
 
 脚本会自动：
-- 从项目内和 G 盘收集所有 9 个权重文件
+- 从项目内和 LPRNet 训练目录收集所有 9 个权重文件
 - 校验每个文件的 MD5
 - 输出到 `opensource/release_assets/` 目录
 
@@ -152,8 +157,8 @@ A: GitHub Release 单文件限制 2GB，总附件无限制。如果网络不稳�
 
 A: 检查以下几点：
 1. 脚本必须在 `esp32-p4-eye-project` 目录下执行
-2. G 盘的 LPRNet 训练项目必须存在（`g:\BaiduNetdiskDownload\CBLPRD-330k_v1\`）
-3. 如果 G 盘路径不同，需要修改 `collect_weights.ps1` 中的路径
+2. 需设置 `LPRNET_TRAIN_DIR` 环境变量指向你的 LPRNet 训练根目录
+3. 如果训练目录结构不同，需要修改 `collect_weights.ps1` 中的子路径
 
 ### Q: Git 提交时出现 LF/CRLF 警告？
 

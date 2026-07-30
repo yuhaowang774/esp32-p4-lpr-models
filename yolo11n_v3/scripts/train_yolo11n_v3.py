@@ -174,7 +174,7 @@ def export_onnx(weight_path):
 
     import torch
     import sys
-    sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
+    sys.path.insert(0, str(Path(__file__).parent))
     from export_onnx_for_espdl import export_yolo11_for_espdl
 
     export_yolo11_for_espdl(str(weight_path), str(ONNX_OUTPUT), imgsz=IMG_SIZE)

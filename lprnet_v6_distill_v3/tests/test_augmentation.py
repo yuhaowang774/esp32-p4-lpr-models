@@ -8,7 +8,7 @@ import os
 import numpy as np
 
 # 添加项目根路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 
 from augmentation_v2 import (
     letterbox_resize,

@@ -101,8 +101,8 @@ V6 蒸馏版 LPRNet 是基于 V5 教师模型蒸馏得到的学生模型（参�
 通过多轮验证确认：
 
 1. **固件正确性已验证**：
-   - V3 INT8 源模型 MD5: `037E2F207A136DEB408FA2919B481FA9`
-   - 构建产物 MD5: `037E2F207A136DEB408FA2919B481FA9`（一致）
+   - V3 INT8 源模型 MD5: `98C70FC078384903B083D0935606A660`
+   - 构建产物 MD5: `98C70FC078384903B083D0935606A660`（一致）
    - V2 INT8 MD5: `9124C6AD0094526707A6508198A8C5F5`（不同）
    - V2/V3 INT8 文件 97.36% 字节不同
 
@@ -137,13 +137,13 @@ V6 蒸馏版 LPRNet 是基于 V5 教师模型蒸馏得到的学生模型（参�
 | `best_lprnet_v6_distilled_v3.pth` | 7,590,864 字节 | `AACF5EF81C1711A5CAAB20C34A0E0EB6` |
 | `lprnet_v6_distilled_v3.onnx` | 2,516,577 字节 | `AD88AE94BF75FF46F31874B11CE74352` |
 | `quantize_output/lprnet_v6_distilled_v3_int8` | - | `972FD391CE93C0837DBB9AC272320BD0` |
-| ESP32 部署 `lprnet_v6_distilled_v3_int8.espdl` | 665,328 字节 | `037E2F207A136DEB408FA2919B481FA9` |
+| ESP32 部署 `lprnet_v6_int8.espdl` | 665,968 字节 | `98C70FC078384903B083D0935606A660` |
 
 ### 5.3 关键观察
 
 - V2 和 V3 的 `.pth` 与 `.onnx` 文件大小完全相同，但 MD5 不同 → 确认是不同模型
-- V3 INT8 (665,328 字节) 比 V2 INT8 (666,000 字节) 小 672 字节
-- V3 INT8 的两个 MD5 不同（`972FD3...` vs `037E2F...`）是因为 `.espdl` 是打包格式，`_int8` 是原始量化输出
+- V3 INT8 (665,968 字节) 比 V2 INT8 (666,000 字节) 小 32 字节
+- V3 INT8 的两个 MD5 不同（`972FD3...` vs `98C70F...`）是因为 `.espdl` 是打包格式，`_int8` 是原始量化输出
 
 ---
 
@@ -206,7 +206,7 @@ V6 蒸馏版 LPRNet 是基于 V5 教师模型蒸馏得到的学生模型（参�
 
 ```
 <项目根>/factory_demo/components/lp_char_recognize/
-├── models\p4\lprnet_v6_distilled_v3_int8.espdl   ★ 当前部署的 V3 INT8 模型
+├── models\p4\lprnet_v6_int8.espdl   ★ 当前部署的 V3 INT8 模型
 ├── CMakeLists.txt                                引用 V3 模型文件
 └── lp_char_recognize.cpp                         CTC 解码逻辑（含 trailing rescue）
 ```
@@ -228,7 +228,7 @@ V6 蒸馏版 LPRNet 是基于 V5 教师模型蒸馏得到的学生模型（参�
 | 优先级 | 文件 | 路径 | 用途 |
 |--------|------|------|------|
 | ★★★ | `final_lprnet_v6_distilled_v3.pth` | V3 项目根目录 | 最终模型权重，可重新导出 ONNX/INT8 |
-| ★★★ | `lprnet_v6_distilled_v3_int8.espdl` | `factory_demo\components\lp_char_recognize\models\p4\` | ESP32 部署的 INT8 模型 |
+| ★★★ | `lprnet_v6_int8.espdl` | `factory_demo\components\lp_char_recognize\models\p4\` | ESP32 部署的 INT8 模型 |
 | ★★ | `lprnet_v6_distilled_v3.onnx` | V3 项目根目录 | ONNX 中间格式 |
 | ★★ | `config.py` | V3 项目根目录 | V3 训练配置（含所有超参数） |
 | ★ | `best_lprnet_v6_distilled_v3.pth` | V3 项目根目录 | 最佳验证集权重（备份） |
@@ -268,4 +268,4 @@ V6 蒸馏 V3 是在 V2 基础上的针对性优化版本，通过降低 blank �
 
 受限于 ESP32-P4 的 INT8 量化精度，V3 在实机部署时与 V2 表现相同（95.55% 完全匹配率，267 个绿牌末尾丢失）。用户已接受当前识别效果。
 
-**最终保存版本：V3**（`final_lprnet_v6_distilled_v3.pth` + `lprnet_v6_distilled_v3_int8.espdl`），V2 已归档至 `lprnet_v6_distill_v2_project_archive`。
+**最终保存版本：V3**（`final_lprnet_v6_distilled_v3.pth` + `lprnet_v6_int8.espdl`），V2 已归档至 `lprnet_v6_distill_v2_project_archive`。

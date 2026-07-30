@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from model_v6 import LPRNetV6
 from dataset_v2 import LPRDatasetV2, collate_fn
-from train_lprnet_v6_distill_v2 import validate, validate_balanced
+from train_lprnet_v6_distill_v3 import validate, validate_balanced
 from config import *
 
 

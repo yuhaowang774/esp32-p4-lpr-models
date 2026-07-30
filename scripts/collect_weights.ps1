@@ -1,6 +1,10 @@
-# Weight files collection script
-# Collects all weight files from project and G: drive to release_assets/
+# Weight files collection script (maintainer-only)
+# Collects all weight files from project and external training directories to release_assets/
 # Usage: run from esp32-p4-eye-project directory: .\opensource\scripts\collect_weights.ps1
+#
+# NOTE: This script is for project maintainers to collect weights from local training
+# directories. Other users should download weights from GitHub Release instead.
+# Configure LPRNET_TRAIN_DIR environment variable to point to your local LPRNet training root.
 
 $ErrorActionPreference = "Stop"
 
@@ -8,16 +12,24 @@ $ErrorActionPreference = "Stop"
 $PROJECT_ROOT = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path))
 $OUTPUT_DIR = Join-Path $PROJECT_ROOT "opensource\release_assets"
 
+# External training directory (maintainer's local path, override via environment variable)
+$LPRNET_TRAIN_DIR = $env:LPRNET_TRAIN_DIR
+if (-not $LPRNET_TRAIN_DIR) {
+    $LPRNET_TRAIN_DIR = ".\data\lprnet_train"
+}
+
 # Create output directory
 if (Test-Path $OUTPUT_DIR) {
     Remove-Item $OUTPUT_DIR -Recurse -Force
 }
 New-Item -ItemType Directory -Force -Path $OUTPUT_DIR | Out-Null
 Write-Host "Output: $OUTPUT_DIR" -ForegroundColor Cyan
+Write-Host "LPRNet train dir: $LPRNET_TRAIN_DIR" -ForegroundColor Cyan
 
 # Weight files: source path -> destination filename
+# For absolute paths (G:\), use directly; for relative paths, prepend PROJECT_ROOT
 $files = @(
-    # YOLO11n v3
+    # YOLO11n v3 (from project directory)
     @{
         src = "factory_demo\model\yolo_v4_package\03_baseline\phase2_best_v3.pt"
         dst = "yolo11n_256x256_v3_phase2_best.pt"
@@ -33,19 +45,19 @@ $files = @(
         dst = "yolo11n_256x256_v3_int8.espdl"
         expected_md5 = "8157CE76714B66E1FCE5C5B2E5B181AB"
     },
-    # LPRNet V6 distill V3
+    # LPRNet V6 distill V3 (from external training directory)
     @{
-        src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v6_distill_v3_project\final_lprnet_v6_distilled_v3.pth"
+        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v6_distill_v3_project\final_lprnet_v6_distilled_v3.pth"
         dst = "final_lprnet_v6_distilled_v3.pth"
         expected_md5 = "4DF25025E391F4E7D0CB28F6009587C5"
     },
     @{
-        src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v6_distill_v3_project\best_lprnet_v6_distilled_v3.pth"
+        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v6_distill_v3_project\best_lprnet_v6_distilled_v3.pth"
         dst = "best_lprnet_v6_distilled_v3.pth"
         expected_md5 = "AACF5EF81C1711A5CAAB20C34A0E0EB6"
     },
     @{
-        src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v6_distill_v3_project\lprnet_v6_distilled_v3.onnx"
+        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v6_distill_v3_project\lprnet_v6_distilled_v3.onnx"
         dst = "lprnet_v6_distilled_v3.onnx"
         expected_md5 = "AD88AE94BF75FF46F31874B11CE74352"
     },
@@ -56,12 +68,12 @@ $files = @(
     },
     # LPRNet V5 teacher + V2 student (distillation dependencies)
     @{
-        src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v5_project\lpenet_v5\best_model.pth"
+        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v5_project\lpenet_v5\best_model.pth"
         dst = "lprnet_v5_best_model.pth"
         expected_md5 = "95BDE52EFF653ABF3CC6E31C5062F81F"
     },
     @{
-        src = "g:\BaiduNetdiskDownload\CBLPRD-330k_v1\lprnet_v6_distill_v2_project\best_lprnet_v6_distilled_v2.pth"
+        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v6_distill_v2_project\best_lprnet_v6_distilled_v2.pth"
         dst = "best_lprnet_v6_distilled_v2.pth"
         expected_md5 = "A16FDB3025189E643B805FD1A0800D86"
     }
