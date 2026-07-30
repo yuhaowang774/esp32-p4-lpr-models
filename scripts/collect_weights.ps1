@@ -66,12 +66,9 @@ $files = @(
         dst = "lprnet_v6_int8.espdl"
         expected_md5 = "98C70FC078384903B083D0935606A660"
     },
-    # LPRNet V5 teacher + V2 student (distillation dependencies)
-    @{
-        src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v5_project\lpenet_v5\best_model.pth"
-        dst = "lprnet_v5_best_model.pth"
-        expected_md5 = "95BDE52EFF653ABF3CC6E31C5062F81F"
-    },
+    # LPRNet V2 student (V3 distillation initialization)
+    # NOTE: V5 teacher weight (28MB) is NOT included - exceeds GitHub Release 25MB limit.
+    # Train V5 teacher model using train_lprnet_v5.py if needed for distillation.
     @{
         src = Join-Path $LPRNET_TRAIN_DIR "lprnet_v6_distill_v2_project\best_lprnet_v6_distilled_v2.pth"
         dst = "best_lprnet_v6_distilled_v2.pth"

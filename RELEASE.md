@@ -9,11 +9,13 @@
 | 压缩包 | 大小 | 内容 |
 |--------|------|------|
 | `yolo11n_v3_weights.zip` | 15.52 MB | YOLO11n v3 全部 3 个权重文件 |
-| `lprnet_v6_distill_v3_weights.zip` | 44.2 MB | LPRNet V6 蒸馏 V3 全部 6 个权重文件 |
+| `lprnet_v6_distill_v3.zip` | 18.21 MB | LPRNet V6 蒸馏 V3 全部 5 个权重文件（含 V2 学生权重） |
 
 下载后解压到对应目录（见下方各模型的"放置目录"列）。
 
 Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/v1.0`
+
+> **注意**：V5 教师模型权重（`lprnet_v5_best_model.pth`，28MB）因超过 GitHub Release 单文件 25MB 限制，未包含在 Release 中。如需重新训练 V3 蒸馏模型，请先按 `lprnet_v6_distill_v3/scripts/train_lprnet_v5.py` 自行训练 V5 教师模型，或从其他来源获取。
 
 ## YOLO11n v3 256×256
 
@@ -39,7 +41,7 @@ Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/
 
 ## LPRNet V6 蒸馏 V3
 
-### 文件清单（含于 lprnet_v6_distill_v3_weights.zip）
+### 文件清单（含于 lprnet_v6_distill_v3.zip）
 
 | 文件 | 放置目录 | 大小 | MD5 | 说明 |
 |------|---------|------|-----|------|
@@ -47,8 +49,8 @@ Release v1.0: `https://github.com/yuhaowang774/esp32-p4-lpr-models/releases/tag/
 | `best_lprnet_v6_distilled_v3.pth` | `lprnet_v6_distill_v3/pretrained/` | 7,590,864 字节 (7.2 MB) | `AACF5EF81C1711A5CAAB20C34A0E0EB6` | 最佳验证集权重（备份） |
 | `lprnet_v6_distilled_v3.onnx` | `lprnet_v6_distill_v3/outputs/` | 2,516,577 字节 (2.4 MB) | `AD88AE94BF75FF46F31874B11CE74352` | ONNX 中间格式 |
 | `lprnet_v6_int8.espdl` | `lprnet_v6_distill_v3/outputs/` | 665,968 字节 (0.65 MB) | `98C70FC078384903B083D0935606A660` | ESP32-P4 部署的 INT8 量化模型 |
-| `lprnet_v5_best_model.pth` | `lprnet_v6_distill_v3/pretrained/` | 29,575,033 字节 (28.2 MB) | `95BDE52EFF653ABF3CC6E31C5062F81F` | V5 教师模型权重（蒸馏用） |
 | `best_lprnet_v6_distilled_v2.pth` | `lprnet_v6_distill_v3/pretrained/` | 7,590,864 字节 (7.2 MB) | `A16FDB3025189E643B805FD1A0800D86` | V6 蒸馏 V2 学生权重（V3 初始化用） |
+| `lprnet_v5_best_model.pth` | — | — | — | V5 教师权重未提供（见上方说明），需自行训练 |
 
 ### 性能指标
 
@@ -79,7 +81,6 @@ opensource/
     ├── pretrained/
     │   ├── final_lprnet_v6_distilled_v3.pth      ← 从 Release 下载
     │   ├── best_lprnet_v6_distilled_v3.pth       ← 从 Release 下载
-    │   ├── lprnet_v5_best_model.pth              ← 从 Release 下载
     │   └── best_lprnet_v6_distilled_v2.pth       ← 从 Release 下载
     └── outputs/
         ├── lprnet_v6_distilled_v3.onnx           ← 从 Release 下载
